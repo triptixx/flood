@@ -1,49 +1,45 @@
-ARG NODE_IMAGE=node:12.2-alpine
-ARG WORKDIR=/usr/src/app/
+ARG ALPINE_TAG=3.10
+ARG FLOOD_VER=1.0.0
 
-FROM ${NODE_IMAGE} as nodebuild
-ARG WORKDIR
+FROM node:alpine AS builder
 
-WORKDIR $WORKDIR
-
-# Generate node_modules
-COPY package.json \
-     package-lock.json \
-     .babelrc \
-     .eslintrc.js \
-     .eslintignore \
-     .prettierrc \
-     ABOUT.md \
-     $WORKDIR
-RUN apk add --no-cache --virtual=build-dependencies \
-    python build-base && \
-    npm install && \
-    apk del --purge build-dependencies
-
-# Build static assets and remove devDependencies.
-COPY client ./client
-COPY server ./server
-COPY shared ./shared
-COPY scripts ./scripts
-COPY config.docker.js ./config.js
-RUN npm run build && \
+### install flood
+WORKDIR /output/flood
+RUN apk add --no-cache build-base git python; \
+    git clone https://github.com/jfurrow/flood.git -b master /flood-src; \
+    cp -a /flood-src/package.json /flood-src/package-lock.json /flood-src/.babelrc \
+        /flood-src/.eslintrc.js /flood-src/.eslintignore /flood-src/.prettierrc .; \
+    npm install; \
+    cp -a /flood-src/client /flood-src/server /flood-src/shared /flood-src/scripts .; \
+    cp -a /flood-src/config.docker.js ./config.js; \
+    npm run build; \
     npm prune --production
 
-# Now get the clean image without any dependencies and copy compiled app
-FROM ${NODE_IMAGE} as flood
-ARG WORKDIR
+COPY *.sh /output/usr/local/bin/
+RUN chmod +x /output/usr/local/bin/*.sh
 
-WORKDIR $WORKDIR
+#=============================================================
 
-# Install runtime dependencies.
-RUN apk --no-cache add \
-    mediainfo
+FROM loxoo/alpine:${ALPINE_TAG}
 
-COPY --from=nodebuild $WORKDIR $WORKDIR
+ARG FLOOD_VER
+ENV SUID=912 SGID=912
 
-# Hints for consumers of the container.
-EXPOSE 3000
+LABEL org.label-schema.name="flood" \
+      org.label-schema.description="A Docker image for flood web UI for rTorrent" \
+      org.label-schema.url="https://github.com/Flood-UI/flood" \
+      org.label-schema.version=${FLOOD_VER}
+
+COPY --from=builder /output/ /
+
+RUN apk add --no-cache npm mediainfo
+
 VOLUME ["/data"]
 
-# Start application.
-CMD [ "npm", "start" ]
+EXPOSE 3000/TCP
+
+#HEALTHCHECK --start-period=10s --timeout=5s \
+#    CMD /knot/bin/kdig @127.0.0.1 -p 53 +short +time=1 +retry=0 localhost A
+
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
+CMD ["npm", "start"]
