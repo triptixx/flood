@@ -11,3 +11,6 @@ RTORRENT_SCGI_HOST | URL / IP Address   | localhost | The address of your rtorre
 RTORRENT_SCGI_PORT | Integer: 1-65535   | 5000      | The port of your rtorrent SCGI socket
 RTORRENT_SOCK      | boolean            | NotSet    | Enable UNIX socket connection to rtorrent
 FLOOD_ENABLE_SSL   | boolean            | NotSet    | Enable bundled SSL encryption
+
+
+docker run --name flood-standalone -e FLOOD_SECRET=$(openssl rand -hex 32) flood
