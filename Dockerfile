@@ -8,7 +8,8 @@ WORKDIR /output/flood
 RUN apk add --no-cache build-base git python; \
     git clone https://github.com/jfurrow/flood.git -b master /flood-src; \
     cp -a /flood-src/package.json /flood-src/package-lock.json /flood-src/.babelrc \
-        /flood-src/.eslintrc.js /flood-src/.eslintignore /flood-src/.prettierrc .; \
+        /flood-src/.eslintrc.js /flood-src/.eslintignore \
+        /flood-src/.prettierrc /flood-src/ABOUT.md .; \
     npm install; \
     cp -a /flood-src/client /flood-src/server /flood-src/shared /flood-src/scripts .; \
     cp -a /flood-src/config.docker.js ./config.js; \
