@@ -40,8 +40,8 @@ VOLUME ["/data"]
 
 EXPOSE 3000/TCP
 
-#HEALTHCHECK --start-period=10s --timeout=5s \
-#    CMD /knot/bin/kdig @127.0.0.1 -p 53 +short +time=1 +retry=0 localhost A
+HEALTHCHECK --start-period=10s --timeout=5s \
+    CMD wget -qO /dev/null "http://localhost:3000/login"
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
 CMD ["npm", "start"]
