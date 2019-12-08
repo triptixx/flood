@@ -1,0 +1,31 @@
+name: docker build
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  flood:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        uses: actions/checkout@master
+      - name: build
+        uses: triptixx/action-docker-build@master
+        with:
+          repo: flood-dev
+          make: true
+      - name: test
+        uses: triptixx/action-docker-test@master
+        with:
+          verbose: true
+          repo: flood-dev
+          curl: :3000
+      - name: publish
+        uses: triptixx/action-docker-publish@master
+        with:
+          docker_username: ${{ secrets.docker_username }}
+          docker_password: ${{ secrets.docker_password }}
+          from: flood-dev
+          repo: ${{ secrets.docker_username }}/flood
+          tags: latest,%label org.label-schema.version | %auto
