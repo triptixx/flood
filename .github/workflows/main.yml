@@ -14,7 +14,6 @@ jobs:
         uses: triptixx/action-docker-build@master
         with:
           repo: flood-dev
-          make: true
       - name: test
         uses: triptixx/action-docker-test@master
         with:
