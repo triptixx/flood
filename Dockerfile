@@ -34,7 +34,7 @@ LABEL org.label-schema.name="flood" \
 COPY --from=builder /output/ /
 
 WORKDIR /flood
-RUN apk add --no-cache npm mediainfo
+RUN apk add --no-cache npm libmediainfo
 
 VOLUME ["/data"]
 
