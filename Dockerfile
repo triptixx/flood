@@ -24,7 +24,7 @@ RUN chmod +x /output/usr/local/bin/*.sh
 FROM loxoo/alpine:${ALPINE_TAG}
 
 ARG FLOOD_VER
-ENV SUID=912 SGID=912
+ENV SUID=912 SGID=900
 
 LABEL org.label-schema.name="flood" \
       org.label-schema.description="A Docker image for flood web UI for rTorrent" \

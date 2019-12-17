@@ -29,7 +29,7 @@ docker run -d \
 ## Environment
 
 - `$SUID`               - User ID to run as. _default: `912`_
-- `$SGID`               - Group ID to run as. _default: `912`_
+- `$SGID`               - Group ID to run as. _default: `900`_
 - `$FLOOD_BASE_URI`     - The directory to access Flood. _default: `/`
 - `$FLOOD_SECRET`       - A key for encrypting session cookie/JWT. _default: `flood`
 - `$RTORRENT_SCGI_HOST` - The address of your rtorrent SCGI socket. _default: `localhost`
