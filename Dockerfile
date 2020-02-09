@@ -19,7 +19,7 @@ RUN apk add --no-cache build-base git python; \
 COPY *.sh /output/usr/local/bin/
 RUN chmod +x /output/usr/local/bin/*.sh
 
-#=============================================================
+#============================================================
 
 FROM loxoo/alpine:${ALPINE_TAG}
 
