@@ -14,7 +14,8 @@ RUN apk add --no-cache build-base git python; \
     cp -a /flood-src/client /flood-src/server /flood-src/shared /flood-src/scripts .; \
     cp -a /flood-src/config.docker.js ./config.js; \
     npm run build; \
-    npm prune --production
+    npm prune --production; \
+    find ./node_modules/* -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \;
 
 COPY *.sh /output/usr/local/bin/
 RUN chmod +x /output/usr/local/bin/*.sh
