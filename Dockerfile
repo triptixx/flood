@@ -6,7 +6,7 @@ FROM node:alpine AS builder
 ARG FLOOD_VER
 
 ### install flood
-WORKDIR /output/flood
+WORKDIR /flood-src
 RUN apk add --no-cache git; \
     git clone https://github.com/jesec/flood.git --branch v${FLOOD_VER} --depth 1 .; \
     npm set unsafe-perm true; \
