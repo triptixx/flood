@@ -13,6 +13,7 @@ RUN apk add --no-cache build-base git python; \
     npm install; \
     cp -a /flood-src/client /flood-src/server /flood-src/shared /flood-src/scripts .; \
     cp -a /flood-src/config.docker.js ./config.js; \
+    sed -i "s/^\(\s*secret:\s*\).*$/\1 process.env.FLOOD_SECRET || 'flood',/"  ./config.js; \
     npm run build; \
     npm prune --production; \
     find ./node_modules/* -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \;
