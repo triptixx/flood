@@ -6,7 +6,7 @@ FROM node:alpine AS builder
 ### install flood
 WORKDIR /output/flood
 RUN apk add --no-cache build-base git python; \
-    git clone https://github.com/jesec/flood.git --branch v3.1.0/flood-src; \
+    git clone https://github.com/jesec/flood.git --branch v3.1.0 /flood-src; \
     cp -a /flood-src/package.json /flood-src/package-lock.json /flood-src/.babelrc \
         /flood-src/.eslintrc.js /flood-src/.eslintignore \
         /flood-src/.prettierrc /flood-src/ABOUT.md .; \
