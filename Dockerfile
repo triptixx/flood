@@ -7,7 +7,7 @@ ARG FLOOD_VER
 
 ### install flood
 WORKDIR /output/flood
-RUN pk add --no-cache git; \
+RUN apk add --no-cache git; \
     git clone https://github.com/jesec/flood.git --branch v${FLOOD_VER} --depth 1 .; \
     npm set unsafe-perm true; \
     npm install; \
