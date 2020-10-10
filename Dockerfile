@@ -1,12 +1,12 @@
 ARG ALPINE_TAG=3.12
-ARG FLOOD_VER=1.0.0
+ARG FLOOD_VER=3.1.0
 
 FROM node:alpine AS builder
 
 ### install flood
 WORKDIR /output/flood
 RUN apk add --no-cache build-base git python; \
-    git clone https://github.com/jfurrow/flood.git -b master /flood-src; \
+    git clone https://github.com/jesec/flood.git --branch v${FLOOD_VER} /flood-src; \
     cp -a /flood-src/package.json /flood-src/package-lock.json /flood-src/.babelrc \
         /flood-src/.eslintrc.js /flood-src/.eslintignore \
         /flood-src/.prettierrc /flood-src/ABOUT.md .; \
@@ -29,7 +29,7 @@ ENV SUID=912 SGID=900
 
 LABEL org.label-schema.name="flood" \
       org.label-schema.description="A Docker image for flood web UI for rTorrent" \
-      org.label-schema.url="https://github.com/Flood-UI/flood" \
+      org.label-schema.url="https://github.com/jesec/flood.git" \
       org.label-schema.version=${FLOOD_VER}
 
 COPY --from=builder /output/ /
