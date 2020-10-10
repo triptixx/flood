@@ -6,16 +6,19 @@ FROM node:alpine AS builder
 ARG FLOOD_VER
 
 ### install flood
-WORKDIR /flood-src
+WORKDIR /output/flood
 RUN apk add --no-cache git; \
-    git clone https://github.com/jesec/flood.git --branch v${FLOOD_VER} --depth 1 .; \
+    #git clone https://github.com/jesec/flood.git --branch v${FLOOD_VER} /flood-src; \
+    git clone https://github.com/jesec/flood.git --branch master /flood-src; \
+    cp -a /flood-src/package.json /flood-src/package-lock.json /flood-src/.babelrc \
+        /flood-src/.eslintrc.js /flood-src/.eslintignore /flood-src/tsconfig.json \
+        /flood-src/.prettierrc /flood-src/ABOUT.md .; \
     npm set unsafe-perm true; \
     npm install; \
-    cp ./config.cli.js ./config.js; \
+    cp -a /flood-src/client /flood-src/server /flood-src/shared /flood-src/scripts .; \
+    cp -a /flood-src/config.cli.js ./config.js; \
     npm run build; \
-    npm prune --production; \
-    npm pack --ignore-scripts; \
-    DESTDIR=/output npm install -g *.tgz --unsafe-perm
+    npm prune --production
 
 COPY *.sh /output/usr/local/bin/
 RUN chmod +x /output/usr/local/bin/*.sh
@@ -34,6 +37,7 @@ LABEL org.label-schema.name="flood" \
 
 COPY --from=builder /output/ /
 
+WORKDIR /flood
 RUN apk add --no-cache npm mediainfo
 
 VOLUME ["/data"]
@@ -44,4 +48,4 @@ HEALTHCHECK --start-period=10s --timeout=5s \
     CMD wget -qO /dev/null "http://localhost:3000/login"
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
-CMD ["flood", "--rundir=/data", "--host=0.0.0.0"]
+CMD ["npm", "start", "--", "--host=0.0.0.0", "--rundir=/data"]
