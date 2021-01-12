@@ -1,5 +1,5 @@
 ARG ALPINE_TAG=3.12
-ARG FLOOD_VER=3.1.0
+ARG FLOOD_VER=4.3.1
 
 FROM node:alpine AS builder
 
@@ -8,8 +8,8 @@ ARG FLOOD_VER
 ### install flood
 WORKDIR /output/flood
 RUN apk add --no-cache git; \
-    #git clone https://github.com/jesec/flood.git --branch v${FLOOD_VER} /flood-src; \
-    git clone https://github.com/jesec/flood.git --branch master /flood-src; \
+    git clone https://github.com/jesec/flood.git --branch v${FLOOD_VER} /flood-src; \
+    #git clone https://github.com/jesec/flood.git --branch master /flood-src; \
     cp -a /flood-src/package.json /flood-src/package-lock.json /flood-src/.babelrc \
         /flood-src/.eslintrc.js /flood-src/.eslintignore /flood-src/tsconfig.json \
         /flood-src/.prettierrc /flood-src/ABOUT.md .; \
