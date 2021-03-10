@@ -11,11 +11,9 @@ RUN apk add --no-cache git; \
     git clone https://github.com/jesec/flood.git --branch v${FLOOD_VER} /flood-src; \
     cp -a /flood-src/package.json /flood-src/package-lock.json /flood-src/.babelrc \
         /flood-src/.eslintrc.json /flood-src/.eslintignore /flood-src/tsconfig.json \
-        /flood-src/.prettierrc /flood-src/ABOUT.md .; \
-    npm set unsafe-perm true; \
+        /flood-src/.prettierrc /flood-src/.linguirc /flood-src/config.ts .; \
     npm install; \
     cp -a /flood-src/client /flood-src/server /flood-src/shared /flood-src/scripts .; \
-    cp -a /flood-src/config.cli.js ./config.js; \
     npm run build; \
     npm prune --production
 
