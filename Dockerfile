@@ -15,7 +15,9 @@ RUN apk add --no-cache git; \
     npm install; \
     cp -a /flood-src/client /flood-src/server /flood-src/shared /flood-src/scripts .; \
     npm run build; \
-    npm prune --production
+    npm prune --production; \
+    rm -rf client server shared scripts tsconfig.json; \
+    find ./node_modules/* -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \;
 
 COPY *.sh /output/usr/local/bin/
 RUN chmod +x /output/usr/local/bin/*.sh
