@@ -16,7 +16,8 @@ RUN apk add --no-cache git; \
     cp -a /flood-src/client /flood-src/server /flood-src/shared /flood-src/scripts .; \
     npm run build; \
     npm prune --production; \
-    rm -rf client server shared scripts tsconfig.json; \
+    rm -rf client server shared scripts .babelrc .eslintrc.json .eslintignore \
+        tsconfig.json .prettierrc .linguirc config.ts; \
     find ./node_modules/* -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \;
 
 COPY *.sh /output/usr/local/bin/
