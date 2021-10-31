@@ -1,5 +1,5 @@
 ARG ALPINE_TAG=3.14
-ARG FLOOD_VER=4.6.1
+ARG FLOOD_VER=4.7.0
 
 FROM node:alpine AS builder
 
