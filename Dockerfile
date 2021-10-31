@@ -4,6 +4,7 @@ ARG FLOOD_VER=4.7.0
 FROM node:alpine AS builder
 
 ARG FLOOD_VER
+ARG NODE_OPTIONS=--openssl-legacy-provider
 
 ### install flood
 WORKDIR /output/flood
