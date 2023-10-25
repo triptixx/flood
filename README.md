@@ -1,15 +1,14 @@
 [hub]: https://hub.docker.com/r/loxoo/flood
-[mbdg]: https://microbadger.com/images/loxoo/flood
-[git]: https://github.com/triptixx/flood
-[actions]: https://github.com/triptixx/flood/actions
+[git]: https://github.com/triptixx/flood/tree/master
+[actions]: https://github.com/triptixx/flood/actions/workflows/main.yml
 
 # [loxoo/flood][hub]
-[![Layers](https://images.microbadger.com/badges/image/loxoo/flood.svg)][mbdg]
-[![Latest Version](https://images.microbadger.com/badges/version/loxoo/flood.svg)][hub]
-[![Git Commit](https://images.microbadger.com/badges/commit/loxoo/flood.svg)][git]
+[![Git Commit](https://img.shields.io/github/last-commit/triptixx/flood/master)][git]
+[![Build Status](https://github.com/triptixx/flood/actions/workflows/main.yml/badge.svg?branch=master)][actions]
+[![Latest Version](https://img.shields.io/docker/v/loxoo/flood/latest)][hub]
+[![Size](https://img.shields.io/docker/image-size/loxoo/flood/latest)][hub]
 [![Docker Stars](https://img.shields.io/docker/stars/loxoo/flood.svg)][hub]
 [![Docker Pulls](https://img.shields.io/docker/pulls/loxoo/flood.svg)][hub]
-[![Build Status](https://github.com/triptixx/flood/workflows/docker%20build/badge.svg)][actions]
 
 ## Usage
 
