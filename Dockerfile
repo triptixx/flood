@@ -1,7 +1,7 @@
-ARG ALPINE_TAG=3.18
-ARG FLOOD_VER=4.7.0
+ARG ALPINE_TAG=3.20
+ARG FLOOD_VER=4.8.2
 
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 ARG FLOOD_VER
 ENV NODE_OPTIONS=--openssl-legacy-provider
@@ -9,8 +9,7 @@ ENV NODE_OPTIONS=--openssl-legacy-provider
 ### install flood
 WORKDIR /output/flood
 RUN apk add --no-cache git; \
-#    git clone https://github.com/jesec/flood.git --branch v${FLOOD_VER} /flood-src; \
-    git clone https://github.com/jesec/flood.git --branch master /flood-src; \
+    git clone https://github.com/jesec/flood.git --branch v${FLOOD_VER} /flood-src; \
     cp -a /flood-src/package.json /flood-src/package-lock.json /flood-src/.babelrc \
         /flood-src/.eslintrc.json /flood-src/.eslintignore /flood-src/tsconfig.json \
         /flood-src/.prettierrc /flood-src/.linguirc /flood-src/config.ts .; \
