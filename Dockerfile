@@ -46,7 +46,7 @@ VOLUME ["/data"]
 EXPOSE 3000/TCP
 
 HEALTHCHECK --start-period=10s --timeout=5s \
-    CMD wget -qO /dev/null "http://localhost:3000/login"
+    CMD wget -qO /dev/null "http://127.0.0.1:3000/login"
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
 CMD ["npm", "start", "--", "--host=0.0.0.0", "--rundir=/data"]
